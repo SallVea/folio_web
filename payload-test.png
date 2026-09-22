@@ -1,0 +1,6 @@
+<?php
+// Ini adalah simulasi file PHP berbahaya (Web Shell / RCE)
+// File ini sengaja diberi ekstensi .png untuk mengelabui server.
+echo "Website Anda Berhasil Diretas!";
+phpinfo();
+?>
