@@ -1,76 +1,42 @@
 # 🗂️ Folio — Personal Portfolio Showcase
 
-Project Laravel **lengkap dan berdiri sendiri**. Ini BUKAN patch — langsung **replace** seluruh folder project Laravel kamu yang lama dengan isi folder ini.
+Folio adalah sebuah sistem portofolio personal yang dibangun menggunakan framework Laravel. Sistem ini menyediakan antarmuka web untuk manajemen portofolio secara mandiri, sekaligus menyediakan RESTful API (menggunakan Laravel Sanctum) yang dapat dikonsumsi oleh aplikasi klien, seperti aplikasi Android.
 
 ---
 
-## ⚠️ PENTING Sebelum Mulai
+## 🚀 Persyaratan Sistem
 
-1. **Backup dulu** project lama kamu kalau ada data penting yang belum di-export.
-2. Folder ini **tidak menyertakan** `vendor/` — akan otomatis terisi saat `docker compose up --build` (proses `composer install` jalan otomatis di dalam Docker, butuh koneksi internet di komputer kamu).
-3. Tidak perlu `npm install` / `npm run build` — Tailwind CSS & Alpine.js dimuat lewat CDN langsung di Blade layout, tidak ada proses build frontend sama sekali.
-
----
-
-## 📁 Isi Project
-
-```
-folio/
-├── app/
-│   ├── Models/              (7 model: User, Portfolio, PortfolioImage, PortfolioView, Skill, Certificate, SocialLink)
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Api/         (8 controller — endpoint untuk Android)
-│   │   │   └── Web*.php     (7 controller — untuk tampilan web)
-│   │   └── Resources/       (7 resource — format JSON response)
-│   └── Providers/
-├── bootstrap/                (app.php, providers.php)
-├── config/                    (semua config Laravel: app, auth, database, sanctum, cors, dll)
-├── database/
-│   ├── migrations/           (7 migrasi bersih, urut dari nol)
-│   └── seeders/
-├── resources/views/           (13 file Blade: landing, auth, dashboard, halaman publik)
-├── routes/
-│   ├── api.php                (untuk Android)
-│   ├── web.php                (untuk browser)
-│   └── console.php
-├── docker/                    (nginx config, php config)
-├── public/index.php
-├── artisan
-├── composer.json
-├── docker-compose.yml
-├── Dockerfile
-├── Makefile
-└── .env
-```
+Sebelum memulai instalasi, pastikan sistem komputermu telah memasang:
+- **Docker** dan **Docker Compose** (Sangat disarankan menggunakan Docker Desktop agar lebih mudah).
+- **Make** (Opsional, sudah bawaan di Linux/Mac, untuk Windows bisa menggunakan WSL atau Git Bash).
+- **Koneksi Internet** yang stabil (untuk mengunduh *image* Docker dan *dependency* Composer).
 
 ---
 
-## 🚀 Cara Menjalankan (dari Nol)
+## 🛠️ Cara Menjalankan Project
 
-### 1. Pastikan Docker Desktop sudah running
+Project ini sudah disiapkan agar sangat mudah dijalankan menggunakan kontainer Docker tanpa perlu menginstal PHP atau Composer di komputermu secara langsung.
 
-### 2. Masuk ke folder project ini, lalu jalankan:
+### Langkah 1: Buka Terminal
+Buka terminal kesukaanmu dan pastikan kamu sudah berada di dalam direktori project ini.
+
+### Langkah 2: Proses Instalasi Otomatis
+Jalankan perintah berikut untuk menyalakan dan mengatur project dari awal:
+
 ```bash
 make setup
 ```
 
-Ini otomatis akan:
-1. Build image Docker (termasuk `composer install` — Sanctum sudah otomatis ikut karena ada di `composer.json`)
-2. Tunggu PostgreSQL siap
-3. Generate `APP_KEY`
-4. Jalankan semua migrasi (bikin semua tabel dari nol)
-5. Buat storage link (biar foto bisa diakses lewat URL)
-6. Bersihkan cache
+Perintah di atas sangat praktis karena akan mengotomatisasi hal-hal berikut:
+1. Membangun (build) *image* Docker dan mengunduh seluruh *library* yang dibutuhkan (`composer install`).
+2. Menyalakan *container* (Web, App, dan Database).
+3. Menunggu hingga *database* PostgreSQL siap menerima koneksi.
+4. Membuat *Application Key* (`APP_KEY`) untuk keamanan Laravel.
+5. Menjalankan *database migrations* (membuat seluruh tabel dari nol).
+6. Menghubungkan folder penyimpanan (storage link) agar foto/gambar bisa diakses.
+7. Membersihkan *cache* aplikasi.
 
-Tunggu sampai muncul:
-```
-✅ Setup selesai!
-🌐 Web    : http://localhost:8080
-📱 Android: http://10.0.2.2:8080/api/v1
-```
-
-> Kalau tidak ada `make`, jalankan manual:
+> **Catatan:** Jika komputermu tidak mendukung perintah `make`, jalankan baris perintah ini secara manual satu per satu:
 > ```bash
 > docker compose up -d --build
 > docker compose exec app php artisan key:generate
@@ -78,77 +44,64 @@ Tunggu sampai muncul:
 > docker compose exec app php artisan storage:link
 > ```
 
+### Langkah 3: Akses Aplikasi
+Jika proses sudah selesai dan terminal menunjukkan status sukses, kamu bisa membuka aplikasinya lewat peramban (browser):
+
+- **Web App**: [http://localhost:8080](http://localhost:8080)
+- **API Base URL**: `http://localhost:8080/api/v1`
+
 ---
 
-## ✅ Verifikasi
+## 🌐 Navigasi Halaman Web
+
+Berikut adalah daftar halaman yang tersedia di dalam website:
+
+| Halaman | URL | Keterangan |
+|---|---|---|
+| **Beranda (Landing)** | `http://localhost:8080/` | Halaman utama pengenalan aplikasi |
+| **Daftar Akun** | `http://localhost:8080/register` | Untuk membuat akun baru |
+| **Masuk** | `http://localhost:8080/login` | Login ke dalam sistem |
+| **Dashboard** | `http://localhost:8080/dashboard` | Panel kontrol setelah kamu berhasil login |
+| **Portofolio Publik** | `http://localhost:8080/{username}` | Halaman publik yang menampilkan karya pengguna |
+
+---
+
+## 📱 Konfigurasi API untuk Aplikasi Klien (Android)
+
+Jika kamu ingin menyambungkan aplikasi Android ke sistem ini, pastikan untuk menggunakan konfigurasi Base URL berikut:
+
+- Jika menggunakan **Emulator Android** (di komputer yang sama):
+  ```kotlin
+  const val BASE_URL = "http://10.0.2.2:8080/api/v1/"
+  ```
+- Jika menggunakan **Perangkat HP Fisik**:
+  Ganti IP dengan IP Lokal komputer kamu. (Cek menggunakan perintah `ipconfig` di Windows atau `ifconfig` di Mac/Linux).
+  ```kotlin
+  const val BASE_URL = "http://192.168.x.x:8080/api/v1/"
+  ```
+  *(Pastikan HP dan Komputer terhubung dalam jaringan WiFi yang sama).*
+
+---
+
+## 💻 Panduan Perintah (Makefile)
+
+Untuk mempermudah pekerjaan sehari-hari selama masa pengembangan, kamu bisa menggunakan perintah jalan pintas berikut:
 
 ```bash
-make ps        # cek 3 container (db, app, nginx) statusnya "Up"
-make routes     # lihat semua route terdaftar
-```
-
-**Buka di browser:**
-| URL | Halaman |
-|---|---|
-| `http://localhost:8080/` | Landing page |
-| `http://localhost:8080/register` | Daftar akun |
-| `http://localhost:8080/login` | Masuk |
-| `http://localhost:8080/dashboard` | Dashboard (setelah login) |
-| `http://localhost:8080/{username}` | Halaman portofolio publik |
-
----
-
-## 📱 Konfigurasi Android
-
-Project Android (`folio_android.zip`) sudah diset ke:
-```kotlin
-// Emulator (default, tidak usah diubah)
-const val BASE_URL = "http://10.0.2.2:8080/api/"
-
-// HP Fisik — ganti dengan IP komputer kamu
-const val BASE_URL = "http://192.168.x.x:8080/api/"
-```
-Cek IP komputer: `ipconfig` (Windows) / `ifconfig` (Mac/Linux). HP & komputer harus di WiFi yang sama.
-
----
-
-## 🔑 Arsitektur Penting
-
-- **Web** pakai session auth (`Auth::attempt`) — standar Laravel
-- **Android** pakai token Sanctum (`Bearer token`) — lewat `/api/v1/*`
-- Keduanya **independen**, tidak saling konflik, dan membaca/menulis ke **1 database PostgreSQL yang sama**
-- Route `/{username}` di `web.php` ada di **baris paling bawah** agar tidak menangkap `/login`, `/register`, `/dashboard`
-
----
-
-## 🛠️ Perintah Sehari-hari
-
-```bash
-make up        # nyalain Docker
-make down      # matiin Docker
-make logs      # lihat log (debugging)
-make bash      # masuk ke dalam container Laravel
-make migrate   # jalankan migrasi baru (kalau ada)
-make clear     # bersihkan semua cache
-make reset     # ⚠️ HAPUS SEMUA DATA & mulai dari nol lagi
+make up        # Menyalakan project (berjalan di latar belakang)
+make down      # Mematikan project
+make logs      # Melihat log proses aplikasi (berguna jika ada error)
+make bash      # Masuk ke dalam terminal container Laravel
+make migrate   # Menjalankan migrasi database jika ada pembaruan
+make clear     # Membersihkan semua cache sistem Laravel
+make reset     # ⚠️ MENGHAPUS SEMUA DATA database dan memulai dari kondisi kosong
+make ps        # Melihat status container Docker yang sedang berjalan
+make routes    # Menampilkan daftar semua rute (routes) Laravel
 ```
 
 ---
 
-## 🐛 Troubleshooting
-
-| Masalah | Solusi |
-|---|---|
-| `composer install` gagal / timeout | Cek koneksi internet komputer, coba `docker compose build --no-cache app` |
-| `Connection refused (pgsql)` | Database belum siap, tunggu ~20 detik setelah `docker compose up` |
-| Halaman web blank/error 500 | `make logs` untuk lihat detail error |
-| Foto tidak muncul setelah upload | `docker compose exec app php artisan storage:link` |
-| Android tidak bisa connect | Pastikan Docker jalan (`make ps`) sebelum buka Android Studio |
-| CSS/font tidak muncul di browser | Cek koneksi internet (Tailwind CDN & Google Fonts butuh internet) |
-| Route 404 semua | `make clear`, cek `bootstrap/app.php` tidak tertimpa |
-
----
-
-## 🎨 Desain
-
-Dark (`#0B0B0F`) + violet (`#7C3AED`), font **Space Grotesk** (judul) + **Inter** (body) + **JetBrains Mono** (tag teknis/username) — konsisten antara Web dan Android.
+## 🎨 Catatan Desain Web
+Sistem web ini menggunakan gaya tema gelap. Tidak ada proses *build frontend* yang perlu dijalankan (`npm run build`) karena Tailwind CSS dan Alpine.js dimuat langsung melalui CDN. 
+- Warna Utama: Dark (`#0B0B0F`) dan Violet (`#7C3AED`).
+- Font: **Space Grotesk** (untuk Judul), **Inter** (untuk teks paragraf), dan **JetBrains Mono** (untuk teks nama pengguna/kode).
