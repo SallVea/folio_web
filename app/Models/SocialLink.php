@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SocialLink extends Model
 {
+    public $timestamps = false;
     public const PLATFORMS = [
         'GitHub', 'LinkedIn', 'Instagram',
         'Twitter', 'YouTube', 'Facebook', 'Website', 'Other',

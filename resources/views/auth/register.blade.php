@@ -1,65 +1,99 @@
-@extends('layouts.guest')
+@extends('layouts.public')
 
 @section('title', 'Daftar')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center px-6 py-12">
-    <div class="w-full max-w-sm">
-        <a href="{{ route('home') }}" class="font-display text-2xl font-700 block text-center mb-10">
-            Folio<span class="text-violet">.</span>
-        </a>
 
-        <div class="bg-surface border border-border rounded-2xl p-7">
-            <h1 class="font-display text-xl font-600 mb-1">Buat akun Folio</h1>
-            <p class="text-muted text-sm mb-7">Gratis, dan cuma butuh beberapa menit.</p>
+<div class="min-h-[100svh] flex items-center justify-center px-6 py-16">
+    <div class="w-full" style="max-width:460px;" data-animate>
+        <a href="{{ route('home') }}" class="wordmark" style="font-size:24px; display:block; margin-bottom:40px;">Folio.</a>
 
-            @if ($errors->any())
-                <div class="mb-5 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
-                    {{ $errors->first() }}
-                </div>
-            @endif
+        <h1 class="wordmark" style="font-size:clamp(2.5rem, 5vw, 3.5rem); margin:0 0 12px;">Daftar.</h1>
+        <p style="color:var(--muted); margin:0 0 32px;">Gratis, cuma beberapa menit.</p>
 
-            <form method="POST" action="{{ route('register.submit') }}" class="space-y-4">
-                @csrf
-                <div>
-                    <label class="text-xs text-muted font-medium block mb-1.5">Nama Lengkap</label>
-                    <input type="text" name="name" value="{{ old('name') }}" required autofocus
-                           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                </div>
-                <div>
-                    <label class="text-xs text-muted font-medium block mb-1.5">Username</label>
-                    <div class="flex items-center bg-bg border border-border rounded-lg px-4 focus-within:border-violet transition">
-                        <span class="font-mono text-sm text-muted">folio.app/</span>
-                        <input type="text" name="username" value="{{ old('username') }}" required
-                               class="flex-1 bg-transparent py-2.5 text-sm focus:outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="text-xs text-muted font-medium block mb-1.5">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" required
-                           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                </div>
-                <div>
-                    <label class="text-xs text-muted font-medium block mb-1.5">Password</label>
-                    <input type="password" name="password" required
-                           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                </div>
-                <div>
-                    <label class="text-xs text-muted font-medium block mb-1.5">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation" required
-                           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                </div>
-                <button type="submit"
-                        class="w-full bg-violet hover:bg-violetb text-white py-2.5 rounded-lg font-medium transition mt-2">
-                    Daftar
-                </button>
-            </form>
-        </div>
+        @if ($errors->any())
+            <p style="color:#991b1b; margin:0 0 24px;">{{ $errors->first() }}</p>
+        @endif
 
-        <p class="text-center text-sm text-muted mt-6">
-            Sudah punya akun?
-            <a href="{{ route('login') }}" class="text-violetb hover:underline">Masuk di sini</a>
+        <form method="POST" action="{{ route('register.submit') }}" style="display:grid; gap:24px;">
+            @csrf
+            <div style="display:grid; gap:8px;">
+                <label for="name" style="font-size:17px;">Nama lengkap</label>
+                <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="username" style="font-size:17px;">Username</label>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--muted);">folio.app/</span>
+                    <input id="username" type="text" name="username" value="{{ old('username') }}" required autocomplete="username" autocapitalize="none" spellcheck="false">
+                </div>
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="email" style="font-size:17px;">Email</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" inputmode="email">
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="password" style="font-size:17px;">Password</label>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input id="password" type="password" name="password" required style="flex:1;" autocomplete="new-password" minlength="8">
+                    <button type="button" onclick="togglePassword('password')" style="border:0; background:var(--surface); padding:8px 12px;" aria-label="Tampilkan atau sembunyikan password">Lihat</button>
+                </div>
+                <div id="pwd-strength" style="height:6px; background:#e9e9e9; margin-top:4px;"><div id="pwd-bar" style="height:6px; width:0%; background:#232323;"></div></div>
+                <small id="pwd-label" style="color:var(--muted);">Minimal 8 karakter, kombinasikan huruf & angka.</small>
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="password_confirmation" style="font-size:17px;">Konfirmasi password</label>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input id="password_confirmation" type="password" name="password_confirmation" required style="flex:1;" autocomplete="new-password">
+                    <button type="button" onclick="togglePassword('password_confirmation')" style="border:0; background:var(--surface); padding:8px 12px;" aria-label="Tampilkan atau sembunyikan konfirmasi password">Lihat</button>
+                </div>
+            </div>
+            <button type="submit" class="btn" style="justify-self:start;">Daftar</button>
+        </form>
+
+        <p style="margin-top:32px; color:var(--muted);">
+            Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
         </p>
+
+        <section style="margin-top:56px;" data-animate>
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;">
+                @foreach ([63,39,23,486] as $pid)
+                    <img src="https://picsum.photos/id/{{ $pid }}/360/240"
+                         alt="Still life photograph from an open collection, used as atmosphere."
+                         width="360" height="240" loading="lazy" class="drift w-full"
+                         style="aspect-ratio:3/2; object-fit:cover;" data-animate>
+                @endforeach
+            </div>
+            <div style="margin-top:12px; aspect-ratio:16/9; overflow:hidden;" data-animate>
+                <video autoplay muted loop playsinline preload="metadata"
+                       poster="assets/hunt-and-peck-typing-monkeytype-benchmark-poster.jpg"
+                       width="854" height="480" aria-hidden="true"
+                       style="width:100%; height:100%; object-fit:cover;">
+                    <source src="assets/hunt-and-peck-typing-monkeytype-benchmark.webm" type="video/webm">
+                </video>
+            </div>
+        </section>
     </div>
 </div>
+
+<script>
+function togglePassword(id){
+  const el=document.getElementById(id);
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+const pwd=document.getElementById('password');
+if(pwd){
+  pwd.addEventListener('input',()=>{
+    const v=pwd.value;
+    let score=0;
+    if(v.length>=8) score++;
+    if(/[A-Z]/.test(v)) score++;
+    if(/[0-9]/.test(v)) score++;
+    if(/[^A-Za-z0-9]/.test(v)) score++;
+    const widths=['0%','25%','50%','75%','100%'];
+    document.getElementById('pwd-bar').style.width=widths[score];
+    document.getElementById('pwd-label').textContent=['Lemah','Lemah','Sedang','Kuat','Sangat kuat'][score];
+  });
+}
+</script>
 @endsection

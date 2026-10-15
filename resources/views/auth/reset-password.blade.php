@@ -1,52 +1,49 @@
-@extends('layouts.guest')
+@extends('layouts.public')
 
-@section('title', 'Buat Password Baru')
+@section('title', 'Password Baru')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center px-6">
-    <div class="w-full max-w-sm">
-        <a href="{{ route('home') }}" class="font-display text-2xl font-700 block text-center mb-10">
-            Folio<span class="text-violet">.</span>
-        </a>
 
-        <div class="bg-surface border border-border rounded-2xl p-7">
-            <h1 class="font-display text-xl font-600 mb-1">Password Baru</h1>
-            <p class="text-muted text-sm mb-7">Silakan buat password baru untuk akun Anda.</p>
+<div class="min-h-[100svh] flex items-center justify-center px-6 py-16">
+    <div class="w-full" style="max-width:460px;" data-animate>
+        <a href="{{ route('home') }}" class="wordmark" style="font-size:24px; display:block; margin-bottom:40px;">Folio.</a>
 
-            <form method="POST" action="{{ route('password.update') }}" class="space-y-4">
-                @csrf
-                <input type="hidden" name="token" value="{{ $token }}">
+        <h1 class="wordmark" style="font-size:clamp(2.5rem, 5vw, 3.5rem); margin:0 0 12px;">Password baru.</h1>
+        <p style="color:var(--muted); margin:0 0 32px;">Buat password baru untuk akun Anda.</p>
 
-                <div>
-                    <label for="email" class="text-xs text-muted font-medium block mb-1.5">Email Address</label>
-                    <input type="email" id="email" name="email" value="{{ request()->email }}" required readonly
-                        class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm text-muted focus:outline-none cursor-not-allowed">
-                    @error('email')
-                        <p class="mt-1.5 text-xs text-red-400">{{ $message }}</p>
-                    @enderror
+        <form method="POST" action="{{ route('password.update') }}" style="display:grid; gap:24px;">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+            <div style="display:grid; gap:8px;">
+                <label for="email" style="font-size:17px;">Email</label>
+                <input id="email" type="email" name="email" value="{{ request()->email }}" required readonly>
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="password" style="font-size:17px;">Password baru</label>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input id="password" type="password" name="password" required autofocus style="flex:1;" autocomplete="new-password" minlength="8">
+                    <button type="button" onclick="togglePassword('password')" style="border:0; background:var(--surface); padding:8px 12px;" aria-label="Tampilkan atau sembunyikan password">Lihat</button>
                 </div>
-
-                <div>
-                    <label for="password" class="text-xs text-muted font-medium block mb-1.5">Password Baru</label>
-                    <input type="password" id="password" name="password" required autofocus
-                        class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                    @error('password')
-                        <p class="mt-1.5 text-xs text-red-400">{{ $message }}</p>
-                    @enderror
+                @error('password')
+                    <p style="color:#991b1b; font-size:14px;">{{ $message }}</p>
+                @enderror
+            </div>
+            <div style="display:grid; gap:8px;">
+                <label for="password_confirmation" style="font-size:17px;">Konfirmasi password baru</label>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input id="password_confirmation" type="password" name="password_confirmation" required style="flex:1;" autocomplete="new-password">
+                    <button type="button" onclick="togglePassword('password_confirmation')" style="border:0; background:var(--surface); padding:8px 12px;" aria-label="Tampilkan atau sembunyikan konfirmasi password">Lihat</button>
                 </div>
-
-                <div>
-                    <label for="password_confirmation" class="text-xs text-muted font-medium block mb-1.5">Konfirmasi Password Baru</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" required
-                        class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition">
-                </div>
-
-                <button type="submit"
-                    class="w-full bg-violet hover:bg-violetb text-white py-2.5 rounded-lg font-medium transition mt-2">
-                    Simpan Password Baru
-                </button>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="btn" style="justify-self:start;">Simpan password baru</button>
+        </form>
     </div>
 </div>
+
+<script>
+function togglePassword(id){
+  const el=document.getElementById(id);
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+</script>
 @endsection

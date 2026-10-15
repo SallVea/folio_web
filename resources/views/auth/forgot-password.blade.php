@@ -1,48 +1,36 @@
-@extends('layouts.guest')
+@extends('layouts.public')
 
 @section('title', 'Lupa Password')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center px-6">
-    <div class="w-full max-w-sm">
-        <a href="{{ route('home') }}" class="font-display text-2xl font-700 block text-center mb-10">
-            Folio<span class="text-violet">.</span>
-        </a>
 
-        <div class="bg-surface border border-border rounded-2xl p-7">
-            <h1 class="font-display text-xl font-600 mb-1">Lupa Password?</h1>
-            <p class="text-muted text-sm mb-7">Masukkan email Anda dan kami akan mengirimkan link untuk mereset password Anda.</p>
+<div class="min-h-[100svh] flex items-center justify-center px-6 py-16">
+    <div class="w-full" style="max-width:460px;" data-animate>
+        <a href="{{ route('home') }}" class="wordmark" style="font-size:24px; display:block; margin-bottom:40px;">Folio.</a>
 
-            @if (session('success'))
-                <div class="mb-5 px-4 py-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
-                    {{ session('success') }}
-                </div>
-            @endif
+        <h1 class="wordmark" style="font-size:clamp(2.5rem, 5vw, 3.5rem); margin:0 0 12px;">Lupa password.</h1>
+        <p style="color:var(--muted); margin:0 0 32px;">Masukkan email. Kami kirim link reset.</p>
 
-            <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
-                @csrf
+        @if (session('success'))
+            <p style="color:var(--ink); margin:0 0 24px;">{{ session('success') }}</p>
+        @endif
 
-                <div>
-                    <label for="email" class="text-xs text-muted font-medium block mb-1.5">Email Address</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                        class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-violet transition"
-                        placeholder="nama@email.com">
-                    @error('email')
-                        <p class="mt-1.5 text-xs text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
+        <form method="POST" action="{{ route('password.email') }}" style="display:grid; gap:24px;">
+            @csrf
+            <div style="display:grid; gap:8px;">
+                <label for="email" style="font-size:17px;">Email</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@email.com">
+                @error('email')
+                    <p style="color:#991b1b; font-size:17px;">{{ $message }}</p>
+                @enderror
+            </div>
+            <button type="submit" class="btn" style="justify-self:start;">Kirim link reset</button>
+        </form>
 
-                <button type="submit"
-                    class="w-full bg-violet hover:bg-violetb text-white py-2.5 rounded-lg font-medium transition mt-2">
-                    Kirim Link Reset
-                </button>
-            </form>
-        </div>
-
-        <p class="text-center text-sm text-muted mt-6">
-            Ingat password Anda? 
-            <a href="{{ route('login') }}" class="text-violetb hover:underline">Masuk di sini</a>
+        <p style="margin-top:32px; color:var(--muted);">
+            Ingat password? <a href="{{ route('login') }}">Masuk</a>
         </p>
     </div>
 </div>
+
 @endsection

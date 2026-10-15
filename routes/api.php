@@ -14,15 +14,15 @@ Route::prefix('v1')->group(function () {
 
     // ─── Public (tanpa token) ───────────────────────
     Route::prefix('auth')->group(function () {
-        Route::post('/register', [AuthApiController::class, 'register']);
-        Route::post('/login',    [AuthApiController::class, 'login']);
+        Route::post('/register', [AuthApiController::class, 'register'])->middleware('throttle:5,1');
+        Route::post('/login',    [AuthApiController::class, 'login'])->middleware('throttle:5,1');
     });
 
-    Route::get('/u/{username}',        [PublicApiController::class, 'show']);
-    Route::post('/u/{username}/view',  [PublicApiController::class, 'recordView']);
+    Route::get('/u/{username}',        [PublicApiController::class, 'show'])->middleware('throttle:60,1');
+    Route::post('/u/{username}/view',  [PublicApiController::class, 'recordView'])->middleware('throttle:30,1');
 
     // ─── Protected (butuh Bearer Token) ────────────
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'active'])->group(function () {
 
         // Auth
         Route::post('/auth/logout', [AuthApiController::class, 'logout']);

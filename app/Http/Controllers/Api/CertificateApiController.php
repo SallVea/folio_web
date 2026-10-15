@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CertificateResource;
+use App\Rules\HttpUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,7 @@ class CertificateApiController extends Controller
             'issuer'         => 'required|string|max:100',
             'issued_date'    => 'nullable|date',
             'expiry_date'    => 'nullable|date|after:issued_date',
-            'credential_url' => 'nullable|url|max:255',
+            'credential_url' => ['nullable', 'max:255', new HttpUrl()],
             'image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
@@ -51,7 +52,7 @@ class CertificateApiController extends Controller
             'issuer'         => 'sometimes|required|string|max:100',
             'issued_date'    => 'nullable|date',
             'expiry_date'    => 'nullable|date',
-            'credential_url' => 'nullable|url|max:255',
+            'credential_url' => ['nullable', 'max:255', new HttpUrl()],
             'image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 

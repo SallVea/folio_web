@@ -22,7 +22,7 @@ class PublicApiController extends Controller
 
     public function recordView(Request $request, string $username): JsonResponse
     {
-        $user      = User::where('username', $username)->firstOrFail();
+        $user      = User::where('username', $username)->where('is_active', true)->firstOrFail();
         $viewerIp  = $request->ip();
 
         $alreadyViewed = $user->portfolioViews()

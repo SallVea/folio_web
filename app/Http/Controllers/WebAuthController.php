@@ -27,7 +27,21 @@ class WebAuthController extends Controller
             return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
         }
 
+        if (! auth()->user()->is_active) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return back()->withErrors(['email' => 'Akun Anda dinonaktifkan. Hubungi administrator.'])->withInput();
+        }
+
         $request->session()->regenerate();
+
+        \App\Models\AuditLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'auth.login',
+            'ip' => $request->ip(),
+        ]);
 
         return redirect()->route('dashboard');
     }
@@ -43,7 +57,7 @@ class WebAuthController extends Controller
             'name'     => 'required|string|max:100',
             'username' => 'required|string|max:50|alpha_dash|unique:users,username',
             'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d).+$/|confirmed',
         ]);
 
         $user = User::create([
@@ -53,13 +67,28 @@ class WebAuthController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        $user->sendEmailVerificationNotification();
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        \App\Models\AuditLog::create([
+            'user_id' => $user->id,
+            'action' => 'auth.register',
+            'ip' => $request->ip(),
+        ]);
+
+        return redirect()->route('verification.notice');
     }
 
     public function logout(Request $request): RedirectResponse
     {
+        if (auth()->check()) {
+            \App\Models\AuditLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'auth.logout',
+                'ip' => $request->ip(),
+            ]);
+        }
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

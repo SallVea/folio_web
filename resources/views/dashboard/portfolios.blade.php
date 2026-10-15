@@ -3,6 +3,7 @@
 @section('title', 'Portfolio')
 
 @section('content')
+<input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
 <div x-data="{ showCreate: false }">
 
     <div class="flex items-center justify-between mb-8">
@@ -12,7 +13,7 @@
         </div>
         <button @click="showCreate = !showCreate"
                 class="bg-violet hover:bg-violetb text-white px-5 py-2.5 rounded-lg text-sm font-medium transition">
-            <span x-text="showCreate ? '✕ Tutup' : '+ Tambah Portfolio'"></span>
+            <span x-text="showCreate ? 'x Tutup' : '+ Tambah Portfolio'"></span>
         </button>
     </div>
 
@@ -28,15 +29,27 @@
         </form>
     </div>
 
+    <form method="GET" action="{{ route('portfolios.index') }}" class="flex flex-wrap gap-3 mb-6">
+        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari portfolio..." class="flex-1 bg-bg px-4 py-2.5 text-sm focus:outline-none">
+        <select name="category" class="bg-bg px-4 py-2.5 text-sm focus:outline-none">
+            <option value="">Semua kategori</option>
+            @foreach ($categories as $cat)
+                <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>{{ $cat }}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="bg-violet hover:bg-violetb text-white px-5 py-2.5 text-sm font-medium transition">Cari</button>
+        <a href="{{ route('portfolios.index') }}" class="px-5 py-2.5 text-sm text-muted hover:text-[#232323] transition">Reset</a>
+    </form>
+
     <!-- ─── Daftar Portfolio ─────────────────────── -->
     @if ($portfolios->isEmpty())
         <div class="bg-surface border border-border rounded-xl p-14 text-center">
             <p class="text-muted text-sm">Belum ada portfolio. Klik "+ Tambah Portfolio" di atas.</p>
         </div>
     @else
-        <div class="space-y-4">
+        <div class="space-y-4 sortable-list" data-endpoint="{{ route('portfolios.reorder') }}">
             @foreach ($portfolios as $p)
-                <div x-data="{ editing: false }" class="bg-surface border border-border rounded-xl overflow-hidden">
+                <div x-data="{ editing: false }" data-id="{{ $p->id }}" draggable="true" class="bg-surface border border-border rounded-xl overflow-hidden" style="cursor:grab;">
 
                     <!-- View Mode -->
                     <div x-show="!editing" class="p-5 flex gap-4">
@@ -50,11 +63,15 @@
                                 <div>
                                     <p class="font-medium">{{ $p->title }}</p>
                                     @if ($p->category)
-                                        <p class="font-mono text-xs text-violetb mt-0.5">{{ $p->category }}</p>
+                                        <p class="font-body text-xs text-violetb mt-0.5">{{ $p->category }}</p>
                                     @endif
                                 </div>
                                 <div class="flex gap-2 flex-shrink-0">
                                     <button @click="editing = true" class="text-xs text-muted hover:text-violetb transition px-2 py-1">Edit</button>
+                                    <form method="POST" action="{{ route('portfolios.duplicate', $p->id) }}">
+                                        @csrf
+                                        <button type="submit" class="text-xs text-muted hover:text-violetb transition px-2 py-1">Duplikat</button>
+                                    </form>
                                     <form method="POST" action="{{ route('portfolios.destroy', $p->id) }}" onsubmit="return confirm('Hapus portfolio ini?')">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="text-xs text-muted hover:text-red-400 transition px-2 py-1">Hapus</button>
@@ -67,7 +84,7 @@
                             @if ($p->tech_stack)
                                 <div class="flex gap-1.5 mt-3 flex-wrap">
                                     @foreach ($p->tech_stack as $tech)
-                                        <span class="font-mono text-[10px] bg-bg border border-border px-2 py-1 rounded text-muted">{{ $tech }}</span>
+                                        <span class="font-body text-[10px] bg-bg border border-border px-2 py-1 rounded text-muted">{{ $tech }}</span>
                                     @endforeach
                                 </div>
                             @endif
@@ -79,11 +96,11 @@
                         <form method="POST" action="{{ route('portfolios.update', $p->id) }}" class="space-y-4">
                             @csrf @method('PUT')
                             @include('dashboard.partials.portfolio-fields', ['portfolio' => $p])
-                            <div class="flex gap-3">
+                            <div class="flex flex-wrap gap-3">
                                 <button type="submit" class="bg-violet hover:bg-violetb text-white px-5 py-2.5 rounded-lg text-sm font-medium transition">
                                     Simpan Perubahan
                                 </button>
-                                <button type="button" @click="editing = false" class="text-sm text-muted hover:text-white px-5 py-2.5 transition">
+                                <button type="button" @click="editing = false" class="text-sm text-muted hover:text-[#232323] px-5 py-2.5 transition">
                                     Batal
                                 </button>
                             </div>
@@ -118,7 +135,7 @@
                                           class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"
                                           onsubmit="return confirm('Hapus foto ini?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="text-white text-xs">✕</button>
+                                        <button type="submit" class="text-[#232323] text-xs">x</button>
                                     </form>
                                 </div>
                             @endforeach
@@ -129,4 +146,53 @@
         </div>
     @endif
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.sortable-list').forEach(function (list) {
+            let dragged = null;
+            list.querySelectorAll('[data-id]').forEach(function (item) {
+                item.addEventListener('dragstart', function () {
+                    dragged = item;
+                    item.classList.add('opacity-50');
+                });
+                item.addEventListener('dragend', function () {
+                    item.classList.remove('opacity-50');
+                });
+                item.addEventListener('dragover', function (event) {
+                    event.preventDefault();
+                    if (!dragged || dragged === item) {
+                        return;
+                    }
+                    const rect = item.getBoundingClientRect();
+                    const before = event.clientY < rect.top + rect.height / 2;
+                    if (before) {
+                        list.insertBefore(dragged, item);
+                    } else {
+                        list.insertBefore(dragged, item.nextSibling);
+                    }
+                });
+                item.addEventListener('drop', function (event) {
+                    event.preventDefault();
+                    const ids = Array.from(list.querySelectorAll('[data-id]')).map(function (el) {
+                        return parseInt(el.dataset.id, 10);
+                    });
+                    const token = document.getElementById('csrf-token') ? document.getElementById('csrf-token').value : '';
+                    fetch(list.dataset.endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                        },
+                        body: JSON.stringify({ ids: ids, _token: token }),
+                    }).then(function (response) {
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    });
+</script>
 @endsection

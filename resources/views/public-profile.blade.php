@@ -1,148 +1,145 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user->name }} (@{{ $user->username }}) — Folio</title>
-    <meta name="description" content="{{ $user->bio ?? $user->name.' — Portfolio di Folio' }}">
-    @if ($user->profile_photo)
-        <meta property="og:image" content="{{ \Storage::disk('public')->url($user->profile_photo) }}">
-    @endif
+@extends('layouts.public')
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+@section('title', $user->name.' ('.$user->username.') — Folio')
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        bg: '#0B0B0F', surface: '#14141B', surface2: '#1C1C26',
-                        border: '#26262F', violet: '#7C3AED', violetb: '#A78BFA', muted: '#9090A0',
-                    },
-                    fontFamily: {
-                        display: ['"Space Grotesk"', 'sans-serif'],
-                        body: ['"Inter"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background-color: #0B0B0F; }
-        .bracket-hover { position: relative; }
-        .bracket-hover::before, .bracket-hover::after {
-            content: ''; position: absolute; width: 14px; height: 14px;
-            border-color: #7C3AED; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none;
-        }
-        .bracket-hover::before { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; transform: translate(4px,4px); }
-        .bracket-hover::after  { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; transform: translate(-4px,-4px); }
-        .bracket-hover:hover::before, .bracket-hover:hover::after { opacity: 1; transform: translate(0,0); }
-    </style>
-</head>
-<body class="font-body text-[#F4F4F6] antialiased">
+@push('meta')
+@php
+    $profileUrl = route('public.show', $user->username);
+    $ogImage = $user->profile_photo ? url(\Storage::disk('public')->url($user->profile_photo)) : ($user->portfolios->first()?->thumbnail ? url(\Storage::disk('public')->url($user->portfolios->first()->thumbnail)) : null);
+@endphp
+@php
+    $ringkas = request('mode') === 'ringkas';
+    $orderList = $user->section_order ?? [];
+    foreach (['portfolio','skills','certificates'] as $sec) { if (! in_array($sec, $orderList)) { $orderList[] = $sec; } }
+    $secPos = array_flip(array_values($orderList));
+@endphp
+<meta name="description" content="{{ $user->bio ?: $user->job_title ?: $user->name.' — portfolio' }}">
+<link rel="canonical" href="{{ $profileUrl }}">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="{{ $user->name.' — '.$user->job_title }}">
+<meta property="og:description" content="{{ $user->bio ?: $user->job_title ?: 'Portfolio' }}">
+<meta property="og:url" content="{{ $profileUrl }}">
+@if ($ogImage)
+<meta property="og:image" content="{{ $ogImage }}">
+@endif
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $user->name }}">
+<meta name="twitter:description" content="{{ $user->bio ?: $user->job_title }}">
+@endpush
 
-<div class="max-w-3xl mx-auto px-6 py-14 md:py-20">
+@section('content')
 
-    <!-- ─── Header ───────────────────────────────── -->
-    <div class="flex flex-col items-center text-center mb-14">
-        <div class="w-24 h-24 rounded-full bg-violet mb-5 overflow-hidden flex items-center justify-center">
+<div class="max-w-4xl mx-auto px-6 py-14 md:py-20" style="display:flex; flex-direction:column;">
+
+    <!-- ─── Header ─────────────────────────────── -->
+    <header class="text-center mb-20" data-animate>
+        <div class="w-28 h-28 mx-auto mb-8 overflow-hidden surface flex items-center justify-center">
             @if ($user->profile_photo)
                 <img src="{{ \Storage::disk('public')->url($user->profile_photo) }}" class="w-full h-full object-cover" alt="{{ $user->name }}">
             @else
-                <span class="font-display text-3xl font-700 text-white">{{ substr($user->name, 0, 1) }}</span>
+                <span class="wordmark" style="font-size:48px;">{{ substr($user->name, 0, 1) }}</span>
             @endif
         </div>
-        <h1 class="font-display text-2xl font-700">{{ $user->name }}</h1>
-        <p class="font-mono text-sm text-violetb mt-1">@{{ $user->username }}</p>
+
+        <h1 class="wordmark" style="font-size:clamp(2.5rem, 6vw, 4.5rem); line-height:1.05;">{{ $user->name }}</h1>
+        <p class="mt-4" style="font-size:20px; color:var(--ink);">folio.app/{{ $user->username }}</p>
 
         @if ($user->job_title)
-            <p class="text-sm mt-3">{{ $user->job_title }}</p>
+            <p class="mt-6" style="font-size:22px; max-width:42ch; margin-left:auto; margin-right:auto;">{{ $user->job_title }}</p>
         @endif
         @if ($user->location)
-            <p class="text-sm text-muted mt-1">📍 {{ $user->location }}</p>
+            <p class="mt-2" style="color:var(--muted);">{{ $user->location }}</p>
         @endif
         @if ($user->bio)
-            <p class="text-muted text-sm mt-4 max-w-md leading-relaxed">{{ $user->bio }}</p>
+            <p class="mt-6" style="color:var(--ink); max-width:58ch; margin-left:auto; margin-right:auto;">{{ $user->bio }}</p>
         @endif
 
         @if ($user->socialLinks->isNotEmpty())
-            <div class="flex gap-4 mt-5">
+            <div class="flex flex-wrap justify-center gap-6 mt-8" style="font-size:17px;">
                 @foreach ($user->socialLinks as $link)
-                    <a href="{{ $link->url }}" target="_blank" class="text-xs font-mono text-muted hover:text-violetb transition">
-                        {{ $link->platform }}
-                    </a>
+                    <a href="{{ $link->url }}" target="_blank" rel="noopener">{{ $link->platform }}</a>
                 @endforeach
             </div>
         @endif
-    </div>
 
-    <!-- ─── Portfolio ────────────────────────────── -->
-    @if ($user->portfolios->isNotEmpty())
-        <section class="mb-14">
-            <p class="font-mono text-xs text-violetb mb-4">// portfolio</p>
-            <div class="grid md:grid-cols-2 gap-4">
-                @foreach ($user->portfolios as $p)
-                    <div class="bracket-hover bg-surface border border-border rounded-xl overflow-hidden">
-                        <div class="h-36 bg-surface2">
-                            @if ($p->thumbnail)
-                                <img src="{{ \Storage::disk('public')->url($p->thumbnail) }}" class="w-full h-full object-cover" alt="{{ $p->title }}">
-                            @endif
-                        </div>
-                        <div class="p-5">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="font-medium">{{ $p->title }}</p>
-                                @if ($p->is_featured)
-                                    <span class="font-mono text-[9px] bg-violet/15 text-violetb px-2 py-0.5 rounded flex-shrink-0">★ unggulan</span>
+        <div class="flex flex-wrap justify-center items-center gap-6 mt-8" style="font-size:16px;">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{ urlencode($profileUrl) }}" alt="QR profil {{ $user->username }}" width="120" height="120">
+            <div class="flex flex-col gap-3">
+                <a href="{{ route('public.vcard', $user->username) }}" class="btn" style="font-size:16px;">Unduh vCard</a>
+                <a href="{{ $profileUrl }}" target="_blank" rel="noopener">Bagikan profil</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Portfolio ──────────────────────────── -->
+    @if ($user->show_portfolio && $user->portfolios->isNotEmpty())
+        <section class="mb-20" data-animate style="order:{{ ($secPos['portfolio'] ?? 0) + 1 }};">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                <h2 class="wordmark" style="font-size:clamp(1.75rem, 4vw, 2.5rem); margin:0;">Portfolio</h2>
+                <input id="portfolio-search" type="search" placeholder="Cari portfolio, kategori, atau tech..." style="max-width:360px;">
+                <div class="flex gap-4" style="font-size:15px;">
+                    <a href="?mode=detail" style="text-decoration:{{ $ringkas ? 'none' : 'underline' }};">Detail</a>
+                    <a href="?mode=ringkas" style="text-decoration:{{ $ringkas ? 'underline' : 'none' }};">Ringkas</a>
+                </div>
+            </div>
+            @foreach ($user->portfolios->groupBy(fn ($p) => $p->category ?: 'Lainnya') as $group => $items)
+            <div class="portfolio-group mb-10">
+                <h3 style="font-family:var(--display); font-size:20px; margin:0 0 16px;">{{ $group }}</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    @foreach ($items as $p)
+                        <article data-animate data-search="{{ strtolower($p->title.' '.($p->category ?? '').' '.implode(' ', $p->tech_stack ?? [])) }}">
+                            <div class="surface overflow-hidden mb-4">
+                                @if ($p->thumbnail)
+                                    <img src="{{ \Storage::disk('public')->url($p->thumbnail) }}" class="drift w-full" style="aspect-ratio:3/2; object-fit:cover;" alt="{{ $p->title }}">
+                                @else
+                                    <div style="aspect-ratio:3/2;" class="surface"></div>
                                 @endif
                             </div>
-                            @if ($p->category)
-                                <p class="font-mono text-xs text-violetb mt-1">{{ $p->category }}</p>
+                            <h3 style="font-size:22px; font-family:var(--display); font-weight:700; margin:0 0 6px;">{{ $p->title }}</h3>
+                            @if ($p->is_featured)
+                                <p style="color:var(--muted); font-size:17px; margin:0 0 8px;">Unggulan</p>
                             @endif
-                            @if ($p->description)
-                                <p class="text-sm text-muted mt-2 leading-relaxed">{{ $p->description }}</p>
-                            @endif
+                            @unless ($ringkas)
+                                @if ($p->description)
+                                    <p style="color:var(--ink); margin:0 0 8px;">{{ $p->description }}</p>
+                                @endif
+                            @endunless
                             @if ($p->tech_stack)
-                                <div class="flex gap-1.5 mt-3 flex-wrap">
-                                    @foreach ($p->tech_stack as $tech)
-                                        <span class="font-mono text-[10px] bg-bg border border-border px-2 py-1 rounded text-muted">{{ $tech }}</span>
-                                    @endforeach
-                                </div>
+                                <p style="color:var(--muted);">{{ implode(', ', $p->tech_stack) }}</p>
                             @endif
                             @if ($p->project_url || $p->github_url)
-                                <div class="flex gap-4 mt-4">
+                                <div class="flex gap-6 mt-4">
                                     @if ($p->project_url)
-                                        <a href="{{ $p->project_url }}" target="_blank" class="text-xs font-mono text-violetb hover:underline">↗ demo</a>
+                                        <a href="{{ $p->project_url }}" target="_blank" rel="noopener">Demo</a>
                                     @endif
                                     @if ($p->github_url)
-                                        <a href="{{ $p->github_url }}" target="_blank" class="text-xs font-mono text-violetb hover:underline">↗ github</a>
+                                        <a href="{{ $p->github_url }}" target="_blank" rel="noopener">GitHub</a>
                                     @endif
                                 </div>
                             @endif
-                        </div>
-                    </div>
-                @endforeach
+                        </article>
+                    @endforeach
+                </div>
             </div>
+            @endforeach
+            <p id="portfolio-empty" style="color:var(--muted); display:none;">Tidak ada portfolio yang cocok.</p>
         </section>
     @endif
 
-    <!-- ─── Skills ───────────────────────────────── -->
-    @if ($user->skills->isNotEmpty())
+    <!-- ─── Skills ─────────────────────────────── -->
+    @if ($user->show_skills && $user->skills->isNotEmpty())
         @php $levelPercent = ['Beginner'=>20,'Elementary'=>40,'Intermediate'=>60,'Advanced'=>80,'Expert'=>100]; @endphp
-        <section class="mb-14">
-            <p class="font-mono text-xs text-violetb mb-4">// skills</p>
-            <div class="space-y-3">
+        <section class="mb-20" data-animate style="order:{{ ($secPos['skills'] ?? 0) + 1 }};">
+            <h2 class="wordmark" style="font-size:clamp(1.75rem, 4vw, 2.5rem); margin:0 0 24px;">Skills</h2>
+            <div class="space-y-6">
                 @foreach ($user->skills as $s)
-                    <div>
-                        <div class="flex justify-between text-sm mb-1.5">
+                    <div data-animate>
+                        <div class="flex justify-between mb-2" style="font-size:19px;">
                             <span>{{ $s->name }}</span>
-                            <span class="font-mono text-xs text-muted">{{ $s->level }}</span>
+                            <span style="color:var(--muted);">{{ $s->level }}</span>
                         </div>
-                        <div class="h-1.5 bg-surface rounded-full overflow-hidden">
-                            <div class="h-full bg-violet rounded-full" style="width: {{ $levelPercent[$s->level] ?? 60 }}%"></div>
+                        <div style="height:6px; background:var(--surface);">
+                            <div style="height:6px; width:{{ $levelPercent[$s->level] ?? 60 }}%; background:var(--ink);"></div>
                         </div>
                     </div>
                 @endforeach
@@ -150,19 +147,35 @@
         </section>
     @endif
 
-    <!-- ─── Sertifikat ───────────────────────────── -->
-    @if ($user->certificates->isNotEmpty())
-        <section class="mb-14">
-            <p class="font-mono text-xs text-violetb mb-4">// sertifikat</p>
-            <div class="space-y-3">
+    <!-- ─── Certificates ───────────────────────── -->
+    @if ($user->show_certificates && $user->certificates->isNotEmpty())
+        <section class="mb-20" data-animate style="order:{{ ($secPos['certificates'] ?? 0) + 1 }};">
+            <h2 class="wordmark" style="font-size:clamp(1.75rem, 4vw, 2.5rem); margin:0 0 24px;">Sertifikat</h2>
+            <div class="space-y-4">
                 @foreach ($user->certificates as $c)
-                    <div class="bg-surface border border-border rounded-lg px-5 py-4 flex items-center justify-between">
-                        <div>
-                            <p class="font-medium text-sm">{{ $c->title }}</p>
-                            <p class="font-mono text-xs text-violetb mt-0.5">{{ $c->issuer }}</p>
+                    <div data-animate class="surface px-6 py-5 flex items-center justify-between gap-4 flex-wrap">
+                        <div class="flex items-center gap-4">
+                            @if ($c->image)
+                                @if (str_ends_with(strtolower($c->image), '.pdf'))
+                                    <a href="{{ \Storage::disk('public')->url($c->image) }}" target="_blank" rel="noopener" style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:var(--surface);font-size:12px;flex:none;">PDF</a>
+                                @else
+                                    <a href="{{ \Storage::disk('public')->url($c->image) }}" target="_blank" rel="noopener" style="width:64px;height:64px;overflow:hidden;display:block;flex:none;">
+                                        <img src="{{ \Storage::disk('public')->url($c->image) }}" alt="Bukti {{ $c->title }}" style="width:100%;height:100%;object-fit:cover;">
+                                    </a>
+                                @endif
+                            @endif
+                            <div>
+                                <p style="font-size:20px; font-family:var(--display); font-weight:700; margin:0 0 4px;">{{ $c->title }}</p>
+                                <p style="color:var(--muted); margin:0;">{{ $c->issuer }}</p>
+                                @if ($c->credential_status === 'valid')
+                                    <p style="color:var(--muted); margin:4px 0 0; font-size:14px;">Terverifikasi</p>
+                                @elseif ($c->credential_url)
+                                    <p style="color:var(--muted); margin:4px 0 0; font-size:14px;">Belum terverifikasi</p>
+                                @endif
+                            </div>
                         </div>
                         @if ($c->credential_url)
-                            <a href="{{ $c->credential_url }}" target="_blank" class="text-xs font-mono text-muted hover:text-violetb transition">verifikasi ↗</a>
+                            <a href="{{ $c->credential_url }}" target="_blank" rel="noopener">Verifikasi</a>
                         @endif
                     </div>
                 @endforeach
@@ -170,12 +183,57 @@
         </section>
     @endif
 
-    <footer class="text-center pt-8 border-t border-border">
-        <a href="{{ route('home') }}" class="font-mono text-xs text-muted hover:text-violetb transition">
-            built with Folio<span class="text-violet">.</span>
-        </a>
+    <!-- ─── Atmosphere ──────────────────────────── -->
+    <section class="mb-20" data-animate style="order:10;">
+        <h2 class="wordmark" style="font-size:clamp(1.75rem, 4vw, 2.5rem); margin:0 0 24px;">Suasana.</h2>
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            @foreach ([63,39,23,486] as $pid)
+                <img src="https://picsum.photos/id/{{ $pid }}/720/480"
+                     alt="Still life photograph from an open collection, used as atmosphere."
+                     width="720" height="480" loading="lazy" class="drift w-full"
+                     style="aspect-ratio:3/2; object-fit:cover;" data-animate>
+            @endforeach
+        </div>
+        <div style="aspect-ratio:16/9; overflow:hidden;">
+            <video autoplay muted loop playsinline preload="metadata"
+                   poster="assets/hunt-and-peck-typing-monkeytype-benchmark-poster.jpg"
+                   width="854" height="480" aria-hidden="true"
+                   style="width:100%; height:100%; object-fit:cover;">
+                <source src="assets/hunt-and-peck-typing-monkeytype-benchmark.webm" type="video/webm">
+            </video>
+        </div>
+    </section>
+
+    <footer class="pt-8" style="order:11; color:var(--muted); font-size:17px; text-align:center;">
+        <p style="margin:0 0 16px;">
+            Photographs: Lorem Picsum (Unsplash licence). Video: “Hunt and peck typing — Monkeytype benchmark” by C40115, CC BY 4.0, via Wikimedia Commons.
+        </p>
+        <a href="{{ route('home') }}">Folio</a>
     </footer>
+
 </div>
 
-</body>
-</html>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('portfolio-search');
+    if (!input) return;
+    input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0;
+        document.querySelectorAll('[data-search]').forEach(el => {
+            const hay = el.getAttribute('data-search') || '';
+            const match = hay.includes(q);
+            el.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+        document.querySelectorAll('.portfolio-group').forEach(group => {
+            const anyVisible = Array.from(group.querySelectorAll('[data-search]')).some(el => el.style.display !== 'none');
+            group.style.display = anyVisible ? '' : 'none';
+        });
+        const empty = document.getElementById('portfolio-empty');
+        if (empty) empty.style.display = visible === 0 ? '' : 'none';
+    });
+});
+</script>
+
+@endsection

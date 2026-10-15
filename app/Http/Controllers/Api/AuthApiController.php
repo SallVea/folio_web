@@ -18,7 +18,7 @@ class AuthApiController extends Controller
             'name'     => 'required|string|max:100',
             'username' => 'required|string|max:50|unique:users|alpha_dash',
             'email'    => 'required|email|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d).+$/|confirmed',
         ]);
 
         $user  = User::create([
@@ -48,6 +48,12 @@ class AuthApiController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['Email atau password salah.'],
+            ]);
+        }
+
+        if (! $user->is_active) {
+            throw ValidationException::withMessages([
+                'email' => ['Akun Anda dinonaktifkan. Hubungi administrator.'],
             ]);
         }
 

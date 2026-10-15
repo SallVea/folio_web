@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SocialLinkResource;
 use App\Models\SocialLink;
+use App\Rules\HttpUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class SocialLinkApiController extends Controller
     {
         $validated = $request->validate([
             'platform' => 'required|in:'.implode(',', SocialLink::PLATFORMS),
-            'url'      => 'required|url|max:255',
+            'url'      => ['required', 'max:255', new HttpUrl()],
         ]);
 
         if ($request->user()->socialLinks()->where('platform', $validated['platform'])->exists()) {
@@ -46,7 +47,7 @@ class SocialLinkApiController extends Controller
         $link      = $request->user()->socialLinks()->findOrFail($id);
         $validated = $request->validate([
             'platform' => 'sometimes|required|in:'.implode(',', SocialLink::PLATFORMS),
-            'url'      => 'sometimes|required|url|max:255',
+            'url'      => ['sometimes', 'required', 'max:255', new HttpUrl()],
         ]);
         $link->update($validated);
 

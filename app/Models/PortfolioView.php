@@ -9,7 +9,7 @@ class PortfolioView extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['user_id', 'viewer_ip', 'viewed_at'];
+    protected $fillable = ['user_id', 'viewer_ip', 'referrer', 'viewed_at'];
 
     protected function casts(): array
     {

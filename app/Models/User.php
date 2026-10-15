@@ -4,13 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * Nilai default atribut agar konsisten sebelum model disimpan/di-refresh.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'role' => 'user',
+        'is_active' => true,
+        'show_portfolio' => true,
+        'show_skills' => true,
+        'show_certificates' => true,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +44,10 @@ class User extends Authenticatable
         'phone',
         'profile_photo',
         'is_active',
+        'show_portfolio',
+        'show_skills',
+        'show_certificates',
+        'section_order',
     ];
 
     /**
@@ -53,6 +71,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
             'is_active'         => 'boolean',
+            'show_portfolio'    => 'boolean',
+            'show_skills'       => 'boolean',
+            'show_certificates' => 'boolean',
+            'section_order'     => 'array',
         ];
     }
 

@@ -11,7 +11,7 @@ class Portfolio extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = ['sort_order',
         'title',
         'description',
         'category',

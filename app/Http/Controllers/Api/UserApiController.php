@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Rules\HttpUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,7 @@ class UserApiController extends Controller
             'bio'       => 'nullable|string|max:500',
             'job_title' => 'nullable|string|max:100',
             'location'  => 'nullable|string|max:100',
-            'website'   => 'nullable|url|max:255',
+            'website'   => ['nullable', 'max:255', new HttpUrl()],
             'phone'     => 'nullable|string|max:20',
         ]);
 

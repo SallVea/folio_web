@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-8 flex items-center justify-between">
     <div>
-        <h1 class="font-display text-3xl font-700 text-white mb-2">Panel Administrator</h1>
+        <h1 class="font-display text-3xl font-700 text-[#232323] mb-2">Panel Administrator</h1>
         <p class="text-muted">Kelola pengguna dan lihat statistik keseluruhan sistem.</p>
     </div>
 </div>
@@ -14,29 +14,54 @@
     <!-- Stat Cards -->
     <div class="bg-surface border border-border rounded-2xl p-6">
         <h3 class="text-sm font-medium text-muted mb-4">Total Pengguna</h3>
-        <p class="font-display text-4xl font-700 text-white">{{ $stats['total_users'] }}</p>
+        <p class="font-display text-4xl font-700 text-[#232323]">{{ $stats['total_users'] }}</p>
     </div>
     
     <div class="bg-surface border border-border rounded-2xl p-6">
         <h3 class="text-sm font-medium text-muted mb-4">Total Portofolio</h3>
-        <p class="font-display text-4xl font-700 text-white">{{ $stats['total_portfolios'] }}</p>
+        <p class="font-display text-4xl font-700 text-[#232323]">{{ $stats['total_portfolios'] }}</p>
     </div>
     
     <div class="bg-surface border border-border rounded-2xl p-6">
         <h3 class="text-sm font-medium text-muted mb-4">Total Admin</h3>
-        <p class="font-display text-4xl font-700 text-white">{{ $stats['admins'] }}</p>
+        <p class="font-display text-4xl font-700 text-[#232323]">{{ $stats['admins'] }}</p>
+    </div>
+
+    <div class="bg-surface border border-border rounded-2xl p-6">
+        <h3 class="text-sm font-medium text-muted mb-4">Total Views</h3>
+        <p class="font-display text-4xl font-700 text-[#232323]">{{ $stats['total_views'] }}</p>
     </div>
 </div>
 
+<div class="bg-surface border border-border rounded-2xl p-6 mb-8">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display text-xl font-600 text-[#232323]">Registrasi 7 Hari</h2>
+        <a href="{{ route('admin.audit') }}" class="text-sm text-violetb hover:text-violet transition">Audit Log →</a>
+    </div>
+    <canvas id="registrationChart" height="120"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+    new Chart(document.getElementById('registrationChart'), {
+        type: 'line',
+        data: {
+            labels: @json($registrationTrend->pluck('date')),
+            datasets: [{ label: 'Registrasi', data: @json($registrationTrend->pluck('count')), borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,.12)', fill: true, tension: .35 }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+</script>
+
 <div class="bg-surface border border-border rounded-2xl p-6">
     <div class="flex items-center justify-between mb-6">
-        <h2 class="font-display text-xl font-600 text-white">Pengguna Terbaru</h2>
+        <h2 class="font-display text-xl font-600 text-[#232323]">Pengguna Terbaru</h2>
         <a href="{{ route('admin.users') }}" class="text-sm text-violetb hover:text-violet transition">Lihat Semua →</a>
     </div>
 
     <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-            <thead class="text-muted border-b border-border">
+<!-- taste-skill-ignore -->            <thead class="text-muted">
                 <tr>
                     <th class="pb-3 font-medium">Nama</th>
                     <th class="pb-3 font-medium">Email</th>
@@ -44,10 +69,10 @@
                     <th class="pb-3 font-medium">Tanggal Daftar</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-border">
+            <tbody>
                 @foreach($recentUsers as $user)
                 <tr class="hover:bg-surface2/50 transition">
-                    <td class="py-4 text-white flex items-center gap-3">
+                    <td class="py-4 text-[#232323] flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-violet/20 text-violetb flex items-center justify-center font-bold">
                             {{ substr($user->name, 0, 1) }}
                         </div>

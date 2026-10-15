@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PortfolioImageResource;
 use App\Http\Resources\PortfolioResource;
+use App\Rules\HttpUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -33,8 +34,8 @@ class PortfolioApiController extends Controller
             'title'        => 'required|string|max:150',
             'description'  => 'nullable|string',
             'category'     => 'nullable|string|max:100',
-            'project_url'  => 'nullable|url|max:255',
-            'github_url'   => 'nullable|url|max:255',
+            'project_url'  => ['nullable', 'max:255', new HttpUrl()],
+            'github_url'   => ['nullable', 'max:255', new HttpUrl()],
             'tech_stack'   => 'nullable|array',
             'tech_stack.*'=> 'string|max:50',
             'is_featured'  => 'boolean',
@@ -64,8 +65,8 @@ class PortfolioApiController extends Controller
             'title'        => 'sometimes|required|string|max:150',
             'description'  => 'nullable|string',
             'category'     => 'nullable|string|max:100',
-            'project_url'  => 'nullable|url|max:255',
-            'github_url'   => 'nullable|url|max:255',
+            'project_url'  => ['nullable', 'max:255', new HttpUrl()],
+            'github_url'   => ['nullable', 'max:255', new HttpUrl()],
             'tech_stack'   => 'nullable|array',
             'tech_stack.*'=> 'string|max:50',
             'is_featured'  => 'boolean',

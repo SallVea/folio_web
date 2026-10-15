@@ -1,0 +1,1030 @@
+{
+ "url": "http://localhost:8080/",
+ "at": "2026-10-14T04:49:41.484Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.44,
+    0.36,
+    0.21,
+    0.93,
+    1
+   ],
+   "motion": {
+    "elements": 15,
+    "css": 4,
+    "transitions": 10,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4474,
+     "screens": 5,
+     "words": 189,
+     "img": 3,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "480",
+      "480",
+      "480"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": []
+    },
+    "hero": {
+     "text": "FOLIO",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 460.8,
+     "vw": 32,
+     "font": "Libre Franklin",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.8,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.95,
+     "top": 614,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "FOLIO",
+     "words": 1,
+     "lines": 1,
+     "size": 460.8,
+     "font": "Libre Franklin"
+    },
+    "headings": [
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 460.8,
+      "vw": 32,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.8,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 614,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Empat.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1135,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Satu link.",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 144,
+      "vw": 10,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.9,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 2828,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 320,
+      "vw": 22.2,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.85,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 4014,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 4,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "Libre Franklin",
+       "share": 0.08,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      16,
+      18,
+      19,
+      20,
+      26,
+      64,
+      144,
+      320,
+      461
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 19,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.7
+     },
+     "measureChars": 63,
+     "max": {
+      "size": 460.8,
+      "vw": 32,
+      "font": "Libre Franklin",
+      "text": "FOLIO"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#232323",
+       "top": 2764,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.14
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#232323",
+       "share": 0.66
+      },
+      {
+       "color": "#d0d0d0",
+       "share": 0.19
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#f2f2f2",
+       "share": 0.04
+      },
+      {
+       "color": "#a1ffcb",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a1ffcb",
+      "hsl": {
+       "h": 147,
+       "s": 1,
+       "l": 0.82
+      },
+      "fg": "#232323"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 52,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar",
+      "Lihat Contoh"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 40,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "libre franklin",
+     "source serif 4"
+    ]
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.26,
+    0.45,
+    0.46,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 15,
+    "css": 4,
+    "transitions": 10,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4842,
+     "screens": 4.7,
+     "words": 189,
+     "img": 3,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "480",
+      "480",
+      "480"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": []
+    },
+    "hero": {
+     "text": "FOLIO",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 245.8,
+     "vw": 32,
+     "font": "Libre Franklin",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.8,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 923,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "FOLIO",
+     "words": 1,
+     "lines": 1,
+     "size": 245.8,
+     "font": "Libre Franklin"
+    },
+    "headings": [
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 245.8,
+      "vw": 32,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.8,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 923,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Empat.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 45.4,
+      "vw": 5.9,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 1287,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Satu link.",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 76.8,
+      "vw": 10,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.9,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 2960,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 184.3,
+      "vw": 24,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.85,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 4497,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 4,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "Libre Franklin",
+       "share": 0.08,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      16,
+      18,
+      19,
+      20,
+      23,
+      45,
+      77,
+      184,
+      246
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17.9,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.7
+     },
+     "measureChars": 63,
+     "max": {
+      "size": 245.8,
+      "vw": 32,
+      "font": "Libre Franklin",
+      "text": "FOLIO"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#232323",
+       "top": 2896,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.14
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#232323",
+       "share": 0.66
+      },
+      {
+       "color": "#d0d0d0",
+       "share": 0.19
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#f2f2f2",
+       "share": 0.04
+      },
+      {
+       "color": "#a1ffcb",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a1ffcb",
+      "hsl": {
+       "h": 147,
+       "s": 1,
+       "l": 0.82
+      },
+      "fg": "#232323"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 52,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar",
+      "Lihat Contoh"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 40,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "libre franklin",
+     "source serif 4"
+    ]
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.56,
+    0.45,
+    0.64,
+    0.63,
+    0.63,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 15,
+    "css": 4,
+    "transitions": 10,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 5394,
+     "screens": 6.4,
+     "words": 189,
+     "img": 3,
+     "video": 1,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "480",
+      "480",
+      "480"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": []
+    },
+    "hero": {
+     "text": "FOLIO",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 241.8,
+     "vw": 62,
+     "font": "Libre Franklin",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.8,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.49,
+     "top": 533,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "FOLIO",
+     "words": 1,
+     "lines": 1,
+     "size": 241.8,
+     "font": "Libre Franklin"
+    },
+    "headings": [
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 241.8,
+      "vw": 62,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.8,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.49,
+      "top": 533,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Empat.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 33.3,
+      "vw": 8.5,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 1552,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Satu link.",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 56,
+      "vw": 14.4,
+      "font": "Libre Franklin",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.9,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.86,
+      "top": 3855,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "FOLIO",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 120,
+      "vw": 30.8,
+      "font": "Libre Franklin",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.85,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.86,
+      "top": 5056,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 4,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Source Serif 4",
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "Libre Franklin",
+       "share": 0.08,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      33,
+      56,
+      120,
+      242
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Source Serif 4",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.7
+     },
+     "measureChars": 42,
+     "max": {
+      "size": 241.8,
+      "vw": 62,
+      "font": "Libre Franklin",
+      "text": "FOLIO"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#232323",
+       "top": 3791,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.14
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#232323",
+       "share": 0.66
+      },
+      {
+       "color": "#d0d0d0",
+       "share": 0.19
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#f2f2f2",
+       "share": 0.04
+      },
+      {
+       "color": "#a1ffcb",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#a1ffcb",
+      "hsl": {
+       "h": 147,
+       "s": 1,
+       "l": 0.82
+      },
+      "fg": "#232323"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 52,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar",
+      "Lihat Contoh"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 40,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "libre franklin",
+     "source serif 4"
+    ]
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/desktop-fold.jpg",
+   "pages": [
+    "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/desktop-page-01.jpg",
+    "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/desktop-page-02.jpg"
+   ]
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/tablet-fold.jpg",
+   "pages": [
+    "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/tablet-page-01.jpg"
+   ]
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/mobile-fold.jpg",
+   "pages": [
+    "/home/sall/GitHub/Project_Mandiri/folio_web/.taste-skill/inspect/mobile-page-01.jpg"
+   ]
+  }
+ ]
+}

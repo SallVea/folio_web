@@ -36,7 +36,7 @@
     <label class="text-xs text-muted font-medium block mb-1.5">Tech Stack (pisahkan dengan koma)</label>
     <input type="text" name="tech_stack_input" value="{{ $p && $p->tech_stack ? implode(', ', $p->tech_stack) : '' }}"
            placeholder="Kotlin, Jetpack Compose, Laravel"
-           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm font-mono focus:outline-none focus:border-violet transition">
+           class="w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-sm font-body focus:outline-none focus:border-violet transition">
 </div>
 
 <label class="flex items-center gap-2 text-sm text-muted">

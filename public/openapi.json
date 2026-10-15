@@ -1,0 +1,43 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Folio Web API",
+    "version": "1.0.0",
+    "description": "Dokumentasi API dasar untuk Folio Web."
+  },
+  "servers": [
+    { "url": "/" }
+  ],
+  "paths": {
+    "/{username}": {
+      "get": {
+        "summary": "Halaman profil publik",
+        "parameters": [
+          { "name": "username", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "HTML profil publik" } }
+      }
+    },
+    "/{username}/vcard": {
+      "get": {
+        "summary": "Unduh vCard profil",
+        "parameters": [
+          { "name": "username", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "File vCard" } }
+      }
+    },
+    "/dashboard/export": {
+      "get": {
+        "summary": "Ekspor data user",
+        "security": [{ "sessionAuth": [] }],
+        "responses": { "200": { "description": "JSON data ekspor" } }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionAuth": { "type": "apiKey", "in": "cookie", "name": "laravel_session" }
+    }
+  }
+}

@@ -39,7 +39,7 @@ class WebPasswordResetController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d).+$/|confirmed',
         ]);
 
         $status = Password::reset(
